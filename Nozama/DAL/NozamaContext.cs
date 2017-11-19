@@ -10,7 +10,7 @@ namespace Nozama.DAL
 {
     public class NozamaContext: DbContext
     {
-        public NozamaContext(): base("NozamaContext")
+        public NozamaContext(): base("DefaultConnection")
         {
             
         }
