@@ -194,6 +194,26 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\acer_aspire.jpg" />
+    <Content Include="Images\backpack.jpg" />
+    <Content Include="Images\charger.jpg" />
+    <Content Include="Images\dell_xps.jpg" />
+    <Content Include="Images\iPad.jpg" />
+    <Content Include="Images\ipad_case_mint_green.jpg" />
+    <Content Include="Images\ipad_case.jpg" />
+    <Content Include="Images\iPhoneX_case_thermal.jpg" />
+    <Content Include="Images\iphoneX_silver.jpg" />
+    <Content Include="Images\iphoneX_space_gray.jpg" />
+    <Content Include="Images\laptop_case_blue.jpg" />
+    <Content Include="Images\macbook_case.jpg" />
+    <Content Include="Images\macbook_silver.jpg" />
+    <Content Include="Images\macbook_sleeve.jpg" />
+    <Content Include="Images\macbook_space_gray.jpg" />
+    <Content Include="Images\otterbox_commuter.jpg" />
+    <Content Include="Images\otterbox_defender.jpg" />
+    <Content Include="Images\samsung_galaxy.jpg" />
+    <Content Include="Images\surface.jpg" />
+    <Content Include="Images\surface_pro.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -208,7 +228,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

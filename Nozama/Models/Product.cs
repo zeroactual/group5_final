@@ -18,7 +18,9 @@ namespace Nozama.Models
         [Display(Name = "Category")]
         public ProductType ProductType { get; set; }
         public string Description { get; set; }
+        [DisplayFormat(DataFormatString = "{0:C}", ApplyFormatInEditMode = true)]
         public decimal Price { get; set; }
+        public string Image { get; set; }
 
     }
 }

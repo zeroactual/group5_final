@@ -29,7 +29,6 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ProductType)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
@@ -44,17 +43,17 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ProductType)
+                    <a href="@Url.Action("Details", new { id = item.ProductID })">
+                        <img src="@Url.Content("~/Images/" + item.Image + "")" alt="Details" width="150" height="150" />
+                    </a>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Description)
+                    @Html.ActionLink(item.Description, "Details", new { id = item.ProductID })
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
-                <td>
-                    @Html.ActionLink("View Details", "Details", new { id = item.ProductID })
-                </td>
+               
             </tr>
         }
 
