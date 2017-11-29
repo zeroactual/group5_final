@@ -21,6 +21,6 @@ namespace Nozama.Models
         [DisplayFormat(DataFormatString = "{0:C}", ApplyFormatInEditMode = true)]
         public decimal Price { get; set; }
         public string Image { get; set; }
-
+        public List<Cart> Carts { get; set; }
     }
 }

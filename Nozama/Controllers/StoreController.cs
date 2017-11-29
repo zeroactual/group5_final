@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.SessionState;
 using Nozama.DAL;
 using Nozama.Models;
 
@@ -134,6 +136,56 @@ namespace Nozama.Controllers
         {
             Product product = db.Products.Find(id);
             db.Products.Remove(product);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        // GET: Store/AddCart/5
+        public ActionResult AddCart(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Product product = db.Products.Find(id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+
+            Guid sessionId;
+            var cookie = Request.Cookies["session"];
+            if (cookie == null || !System.Guid.TryParse(cookie.Value, out sessionId))
+            {
+                sessionId = System.Guid.NewGuid();
+                Response.Cookies.Add(new HttpCookie("session", sessionId.ToString()));
+            }
+            else
+            {
+                sessionId = new Guid(cookie.Value);
+            }
+
+            Response.Cookies.Add(new HttpCookie("session", sessionId.ToString()));
+
+            var cart = db.Carts.Find(sessionId);
+            if (cart == null)
+            {
+                var products = new List<Product>();
+                products.Add(product);
+                db.Carts.Add(
+                    new Cart()
+                    {
+                        CartId = sessionId,
+                        Products = products
+                    }
+                );
+            }
+            else
+            {
+                cart.Products.Add(product);
+                db.Carts.AddOrUpdate(cart);
+            }
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -53,7 +53,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
-               
+                <td>
+                    @Html.ActionLink("Add", "AddCart", new { id=item.ProductID })
+                </td>
             </tr>
         }
 

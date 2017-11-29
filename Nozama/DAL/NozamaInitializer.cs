@@ -12,20 +12,11 @@ namespace Nozama.DAL
     {
         protected override void Seed(NozamaContext context)
         { 
-            //load customers
-            var customers = new List<Customer>
-            {
-                new Customer() {FirstName="Jane",LastName="Doe",StreetAddress="123 Anywhere Streeet",State="MO",PostalCode="12345",Country="USA",Email="janedoe@gmail.com"},
-                new Customer() {FirstName="John",LastName="Doe",StreetAddress="5 Michigan Avenue",State="IL",PostalCode="54321",Country="USA",Email="johndoe@gmail.com"},
-                new Customer() { FirstName="Daisy",LastName="Block",StreetAddress="7896 Green Drive",State="CA",PostalCode="94321",Country="USA",Email="daisyblock@gmail.com"},
-            };
-            customers.ForEach(s => context.Customers.Add(s));
-            context.SaveChanges();
 
             //load products
             var products = new List<Product>
             {
-                new Product() { ProductType=ProductType.Computer,Description="Apple 13\" MacBook Pro, Retina Display, 2.3GHz Intel Core i5 Dual Core, 8GB RAM, 128GB SSD, Silver, MPXR2LL/A (Newest Version)",Price=Convert.ToDecimal(1149.00), Image = "macbook_silver.jpg"},
+                new Product() { ProductID = 1, ProductType=ProductType.Computer,Description="Apple 13\" MacBook Pro, Retina Display, 2.3GHz Intel Core i5 Dual Core, 8GB RAM, 128GB SSD, Silver, MPXR2LL/A (Newest Version)",Price=Convert.ToDecimal(1149.00), Image = "macbook_silver.jpg"},
                 new Product() { ProductType=ProductType.Computer,Description="Apple 15\" MacBook Pro, Retina, Touch Bar, 2.9GHz Intel Core i7 Quad Core, 16GB RAM, 512GB SSD, Space Gray, MPTT2LL/A (Newest Version)",Price=Convert.ToDecimal(2599.00), Image = "macbook_space_gray.jpg"},
                 new Product() { ProductType=ProductType.Tablet,Description="Apple iPad Pro Tablet (32GB, Wi-Fi, 9.7\") Gray(Certified Refurbished)",Price=Convert.ToDecimal(395.00), Image = "iPad.jpg"},
                 new Product() { ProductType=ProductType.Accessory,Description="OtterBox COMMUTER SERIES Case for iPhone X (ONLY) - Standard Packaging - BLACK",Price=Convert.ToDecimal(35.96), Image = "otterbox_commuter.jpg"},
@@ -46,12 +37,11 @@ namespace Nozama.DAL
                 new Product() { ProductType=ProductType.Computer,Description="Dell XPS 15 - 9560 Intel Core i7-7700HQ X4 2.8GHz 16GB 512GB SSD 15.6\" Win10, Silver",Price=Convert.ToDecimal(1699.99), Image = "dell_xps.jpg"},
                 new Product() { ProductType=ProductType.Accessory,Description="FreeBiz 18.4 Inches Laptop Backpack Fits up to 18 Inch Gaming Laptops for Dell, Asus, Msi,Hp (Black)",Price=Convert.ToDecimal(55.99), Image = "backpack.jpg"},
                 new Product() { ProductType=ProductType.Tablet,Description="Microsoft Surface Pro (Intel Core i5, 8GB RAM, 256GB) – Newest Version",Price=Convert.ToDecimal(1139.00), Image = "suface.jpg"},
-
             };
             products.ForEach(s => context.Products.Add(s));
             context.SaveChanges();
 
-
+            context.Carts.Create();
         }
     }
 }
