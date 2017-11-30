@@ -1,4 +1,4 @@
-﻿@model List<Nozama.Models.Product>
+﻿@model ICollection<Nozama.Models.CartProducts>
 
 @{
     ViewBag.Title = "Cart";
@@ -8,33 +8,33 @@
 
 
 <table class="table">
-@*    <tr>*@
-@*        <th>*@
-@*            @Html.DisplayNameFor(model => model.ProductType)*@
-@*        </th>*@
-@*        <th>*@
-@*            @Html.DisplayNameFor(model => model.Description)*@
-@*        </th>*@
-@*        <th>*@
-@*            @Html.DisplayNameFor(model => model.Price)*@
-@*        </th>*@
-@*    </tr>*@
+    @*    <tr>*@
+    @*        <th>*@
+    @*            @Html.DisplayNameFor(model => model.ProductType)*@
+    @*        </th>*@
+    @*        <th>*@
+    @*            @Html.DisplayNameFor(model => model.Description)*@
+    @*        </th>*@
+    @*        <th>*@
+    @*            @Html.DisplayNameFor(model => model.Price)*@
+    @*        </th>*@
+    @*    </tr>*@
 
-@foreach (var product in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => product.ProductType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => product.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => product.Price)
-        </td>
-        <td>
-            @Html.ActionLink("Delete", "Delete", new { id= product.ProductID })
-        </td>
-    </tr>
-}
-
+    @foreach (var product in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => product.Product.ProductType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => product.Product.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => product.Product.Price)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { id= product.Product.ProductID })
+            </td>
+        </tr>
+    }
 </table>
+@Html.ActionLink("Checkout", "Index", "Checkout")

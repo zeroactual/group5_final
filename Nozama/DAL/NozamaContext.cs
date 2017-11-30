@@ -18,6 +18,7 @@ namespace Nozama.DAL
         public DbSet <Order> Orders { get; set; }
         public DbSet <Product> Products { get; set; }
         public DbSet <Cart> Carts { get; set; }
+        public DbSet<CartProducts> CartProducts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

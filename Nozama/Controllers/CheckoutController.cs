@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -30,10 +31,28 @@ namespace Nozama.Controllers
         {
             if (ModelState.IsValid)
             {
-                order.OrderPlaced = new DateTime();
+                Guid sessionId;
+                var cookie = Request.Cookies["session"];
+                if (cookie == null || !System.Guid.TryParse(cookie.Value, out sessionId))
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                sessionId = new Guid(cookie.Value);
+
+                var items = db.CartProducts.SqlQuery(@"SELECT * FROM dbo.CartProducts WHERE Cart_CartId = @id", new SqlParameter("@id", sessionId)).ToList();
+
+                order.OrderPlaced = DateTime.Now;
                 order.Status = Status.Pending;
-//                order.OrderTotal = 
+                decimal sum = 0;
+                foreach (var item in items)
+                {
+                    sum += item.Product.Price;
+                }
+                order.OrderTotal = sum;
                 db.Orders.Add(order);
+                db.SaveChanges();
+
+                db.CartProducts.RemoveRange(items);
                 db.SaveChanges();
                 return Redirect("/");
             }

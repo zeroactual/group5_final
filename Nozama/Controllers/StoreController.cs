@@ -170,22 +170,22 @@ namespace Nozama.Controllers
             var cart = db.Carts.Find(sessionId);
             if (cart == null)
             {
-                var products = new List<Product>();
-                products.Add(product);
+                var products = new List<Product> {product};
                 db.Carts.Add(
                     new Cart()
                     {
                         CartId = sessionId,
-                        Products = products
                     }
                 );
-            }
-            else
-            {
-                cart.Products.Add(product);
-                db.Carts.AddOrUpdate(cart);
+                db.SaveChanges();
             }
 
+            db.CartProducts.Add(new CartProducts()
+            {
+                CartProductId = System.Guid.NewGuid(),
+                Cart = db.Carts.Find(sessionId),
+                Product = product
+            });
             db.SaveChanges();
             return RedirectToAction("Index");
         }

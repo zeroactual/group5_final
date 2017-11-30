@@ -14,6 +14,12 @@ namespace Nozama.Models
 
     public class Product
     {
+
+        public Product()
+        {
+            this.Carts = new List<CartProducts>();
+        }
+
         public int ProductID { get; set; }
         [Display(Name = "Category")]
         public ProductType ProductType { get; set; }
@@ -21,6 +27,7 @@ namespace Nozama.Models
         [DisplayFormat(DataFormatString = "{0:C}", ApplyFormatInEditMode = true)]
         public decimal Price { get; set; }
         public string Image { get; set; }
-        public List<Cart> Carts { get; set; }
+        public virtual ICollection<CartProducts> Carts { get; set; }
+
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -22,30 +23,21 @@ namespace Nozama.Controllers
             var cookie = Request.Cookies["session"];
             if (cookie == null || !System.Guid.TryParse(cookie.Value, out sessionId))
             {
-                return View(new List<Product>());
+                return View(new List<CartProducts>());
             }
 
             sessionId = new Guid(cookie.Value);
             var cart = db.Carts.Find(sessionId);
-            if (cart == null || cart.Products == null)
+            if (cart == null || cart.Carts == null)
             {
-                return View(new List<Product>());
+                return View(new List<CartProducts>());
             }
 
-            return View(cart.Products);
-//
-//            //            var carts = db.Carts.Where(c => c.CartId == new Guid(cook.Value)).Select(c => c.Products);
-//            List<Product> products = c.Products;
-//
-////            List<Cart> products = query.ToList();
-////            Cart cart = query.First();
-////            var query = db.Carts.Where(c => c.Session.SessionId == new Guid(""));            
-//
-//            return View(products);
+            return View(cart.Carts);
         }
 
         // GET: Cart/Delete/5
-        public ActionResult DeleteCart(int? id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -58,20 +50,24 @@ namespace Nozama.Controllers
                 return HttpNotFound();
             }
 
-            var cook = Request.Cookies["session"];
-            Cart c;
-            c = db.Carts.Find(new Guid(cook.Value));
-            if (c == null)
+            Guid sessionId;
+            var cookie = Request.Cookies["session"];
+            if (cookie == null || !System.Guid.TryParse(cookie.Value, out sessionId))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            else
+            sessionId = new Guid(cookie.Value);
+
+            var items = db.CartProducts.SqlQuery(@"SELECT * FROM dbo.CartProducts WHERE Cart_CartId = @id", new SqlParameter("@id", sessionId)).ToList();
+            foreach (var item in items)
             {
-                c.Products.Remove(product);
+                if (item.Product.ProductID == id)
+                {
+                    db.CartProducts.Remove(item);
+                    db.SaveChanges();
+                    break;
+                }
             }
-           
-           
-            db.SaveChanges();
             return RedirectToAction("Index");
         }
     }
