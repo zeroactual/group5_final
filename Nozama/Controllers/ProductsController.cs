@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -112,6 +113,14 @@ namespace Nozama.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Product product = db.Products.Find(id);
+
+            var items = db.CartProducts.SqlQuery(@"SELECT * FROM dbo.CartProducts WHERE Product_ProductId = @id", new SqlParameter("@id", product.ProductID)).ToList();
+            foreach (var item in items)
+            {
+                db.CartProducts.Remove(item);
+                db.SaveChanges();
+            }
+
             db.Products.Remove(product);
             db.SaveChanges();
             return RedirectToAction("Index");
